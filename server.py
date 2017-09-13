@@ -12,7 +12,18 @@ mysql = MySQLConnector(app, 'users')
 
 @app.route('/')
 def index():
+    # Flash message to say if you're logged in
     return render_template('index.html')
+
+
+@app.route('/registration_page')
+def registration_page():
+    return render_template('register.html')
+
+
+@app.route('/login_page')
+def login_page():
+    return render_template('login.html')
 
 
 @app.route('/register', methods=['POST'])
