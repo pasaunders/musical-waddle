@@ -4,6 +4,8 @@ import re
 from mysqlconnection import MySQLConnector
 app = Flask(__name__)
 app.secret_key = "supersecret"
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+
 
 mysql = MySQLConnector(app, 'users')
 
@@ -13,7 +15,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/register')
+@app.route('/register', methods=['POST'])
 def register():
     """Validate and hash registration data."""
     # first name - letters only, 2+ chars min
@@ -25,7 +27,7 @@ def register():
     pass
 
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login():
     # verify that email and password match a user
     # Save matching user's id to session.
